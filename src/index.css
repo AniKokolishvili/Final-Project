@@ -19,7 +19,8 @@ code {
 }
 
 .mainLogo{
-  margin-left: 50px;
+  padding: 10px 0px 10px 100px ; 
+  /* margin-left: 50px; */
 }
 
 .filterContainer{

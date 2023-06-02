@@ -1,8 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.css';
 
 function Final() {
+    const [manufacturer, setManufacturer] = useState<any[]>([]);
+    const [carMakes, setCarMakes] = useState<any[]>([]);
+    const [categories, setCategories] = useState<any[]>([])
+    const [products, setProducts] = useState<any[]>([]);
 
+    //manufucturer
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('https://static.my.ge/myauto/js/mans.json');
+            const jsonData = await response.json();
+            setManufacturer(jsonData);
+        };
+        fetchData();
+    }, []);
+
+    //make
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('https://api2.myauto.ge/ka/getManModels?man_id=10');
+            const jsonData = await response.json();
+            setCarMakes(jsonData.data);
+        };
+        fetchData();
+    }, []);
+    //Category
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('https://api2.myauto.ge/ka/cats/get');
+            const jsonData = await response.json();
+            setCategories(jsonData.data);
+        };
+        fetchData();
+    }, []);
+    //product
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('https://api2.myauto.ge/ka/products/');
+            const jsonData = await response.json();
+            setProducts(jsonData.products);
+        };
+        fetchData();
+    }, []);
 
     return (
         <div className='filterContainer'>
@@ -31,20 +72,25 @@ function Final() {
                 <label>მწარმოებელი</label>
                 <select>
                     <option value='' disabled selected hidden>ყველა მწარმოებელი</option>
-
+                    {manufacturer && manufacturer.map((item) => (
+                        <option key={item.man_id}>{item.man_name}</option>
+                    ))}
                 </select>
                 <label>მოდელი</label>
                 <select>
                     <option value='' disabled selected hidden>მოდელი</option>
-
+                    {carMakes && carMakes.map((item) => (
+                        <option key={item.model_id}>{item.model_name}</option>
+                    ))}
                 </select>
 
                 <label>კატეგორია</label>
                 <select>
                     <option value='' disabled selected hidden>ყველა კატეგორია</option>
-
+                    {categories && categories.map((item) => (
+                        <option key={item.category_id}>{item.title}</option>
+                    ))}
                 </select>
-
             </div>
 
             <div className='priceContainer'>
@@ -61,6 +107,6 @@ function Final() {
 
         </div >
     )
-}
 
+}
 export default Final
