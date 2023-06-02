@@ -5,9 +5,69 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgba(242,243,246,255);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.navbar{
+  background-color: white;
+  margin-bottom: 100px;
+}
+
+.mainLogo{
+  margin-left: 50px;
+}
+
+.filterContainer{
+  margin-right: 500px;
+  border: none;
+}
+
+.auto-logos{
+  display: flex; 
+}
+
+.car-logo-div{
+  background-color: #f7f8fa;
+}
+
+.filter{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 10px 10px;
+
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.priceContainer{
+  margin-top: 2px;
+}
+
+.price{
+  background-color: white;
+  padding: 10px 10px;
+  display: flex;
+}
+
+.searchContainer{
+  background-color: white;
+  align-items: center;
+  box-shadow: 0 0 50px 2px rgba(242,243,246,255);
+}
+
+#search-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff4404;
+  color: white;
+  border:none;
+  border-radius: 10px;
+  padding: 10px 10px;
 }
