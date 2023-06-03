@@ -100,7 +100,10 @@ function Cars() {
                     <option value='0'>For rent</option>
                 </select>
                 <label>მწარმოებელი</label>
-                <select value={manValue} onChange={(e) => handleManValueChange1(e)}>
+                <select
+                    value={manValue}
+
+                    onChange={(e) => handleManValueChange1(e)}>
                     <option disabled selected hidden>ყველა მწარმოებელი</option>
                     {manufacturer && manufacturer.map((item) => {
                         if (item.is_car === "1") {
