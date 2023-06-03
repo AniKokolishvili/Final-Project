@@ -72,9 +72,12 @@ function Final() {
                 <label>მწარმოებელი</label>
                 <select>
                     <option value='' disabled selected hidden>ყველა მწარმოებელი</option>
-                    {manufacturer && manufacturer.map((item) => (
-                        <option key={item.man_id}>{item.man_name}</option>
-                    ))}
+                    {manufacturer && manufacturer.map((item) => {
+                        if (item.is_car === "1") {
+                            return <option key={item.man_id}>{item.man_name}</option>
+                        }
+                    }
+                    )}
                 </select>
                 <label>მოდელი</label>
                 <select>

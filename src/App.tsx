@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Final from './Final';
+import Car from './Cars';
 import Navbar from './Navbar';
 
 const App = () => {
@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <Final />
+      <Car />
     </div>
   );
 }
