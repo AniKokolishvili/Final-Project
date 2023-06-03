@@ -24,7 +24,8 @@ code {
 }
 
 .filterContainer{
-  margin-right: 500px;
+  margin-top: 30px;
+  margin-left: 100px;
   border: none;
 }
 
@@ -32,43 +33,187 @@ code {
   display: flex; 
 }
 
-.car-logo-div{
+.car-logo-btn{
   background-color: #f7f8fa;
+  border: solid rgb(220, 221, 224);
+  border-width: thin;
+  border-top-left-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 83.65px;
+  height: 48px;
+
 }
 
-.filter{
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  padding: 10px 10px;
+/* .car-logo-path{
+  fill: #fd4100;
+} */
 
+.car-logo-btn:focus{
+  border-bottom: solid #fd4100;
+  border-width: thin;
+}
+.car-logo-btn:hover{
+  background-color: white;
+  cursor: pointer;
+ 
+}
+.trac-logo-btn:hover{
+  background-color: white;
+  cursor: pointer;
+}
+.moto-logo-btn:hover{
+  background-color: white;
+  cursor: pointer;
+}
+
+.trac-logo-btn{
+  background-color: #f7f8fa;
+  border: solid rgb(220, 221, 224);
+  border-width: thin;
+  border-left: none;
+  width: 83.65px;
+  height: 48px;
+  padding-left: 15px;
+  padding-right: 15px;
+  }
+
+.moto-logo-btn{
+  background-color: #f7f8fa;
+  border: solid rgb(220, 221, 224);
+  border-width: thin;
+  border-left: none;
+  border-top-right-radius: 10px;
+  width: 82.65px;
+  height: 48px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+    
+
+.filter{
+  width: 200px;
+  height: 352px;
+  padding: 0px 24px 24px 24px;
   background-color: white;
   display: flex;
   flex-direction: column;
+  border: solid rgb(220, 221, 224);
+  border-width: thin;
+  border-top: none;
+  
+}
+
+label{
+  margin-bottom: 8px;
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #272a37;
+
+}
+
+select{
+  width: 198px;
+  height: 40px;
+
 }
 
 .priceContainer{
-  margin-top: 2px;
+  /* margin-top: 2px; */
+}
+
+input{
+width: 67px;
+height: 38px;
+padding: 0px 12px 0px 12px;
 }
 
 .price{
   background-color: white;
-  padding: 10px 10px;
+  width: 200px;
+  height: 98px;
+  padding: 0px 24px 24px 24px;
+  border: solid rgb(220, 221, 224);
+  border-width: thin;
+  border-top: none;
+  border-bottom: none;
+}
+
+
+.priceTag{
   display: flex;
+  justify-content: space-between;
 }
 
-.searchContainer{
-  background-color: white;
-  align-items: center;
-  box-shadow: 0 0 50px 2px rgba(242,243,246,255);
-}
-
-#search-btn{
+.currancy-btns{
   display: flex;
   justify-content: center;
   align-items: center;
+  /* border: solid rgb(216, 219, 226);
+  border-radius: 10px;
+  height: 24px; */
+  
+}
+
+#Lari{
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  font-weight: bold;
+}
+
+
+#Dolar{
+border: none;
+border-radius: 50%;
+font-weight: bold;
+background-color: white;
+
+}
+
+#Lari:focus{
+  width: 24px;
+  height: 24px;
+  color: white;
+  background-color: #272a37
+}
+
+#Dolar:focus{
+  width: 24px;
+  height: 24px;
+  color: white;
+  background-color: #272a37  
+}
+
+
+.price-input-holder{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.searchContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  align-items: center;
+  box-shadow: 0 0 50px 5px rgba(242,243,246,255);
+  width: 200px;
+  height: 44px;
+  padding: 16px 24px 16px 24px;
+  border: solid rgb(220, 221, 224);
+  border-width: thin;
+  border-top: none;
+}
+
+#search-btn{
+  height: 32px;
+  width: 160px;
   background-color: #ff4404;
   color: white;
   border:none;
-  border-radius: 10px;
-  padding: 10px 10px;
+  border-radius: 6px;
 }
