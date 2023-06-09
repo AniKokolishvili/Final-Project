@@ -41,7 +41,7 @@ code {
 .car-logo-btn{
   background-color: #f7f8fa;
   border: solid rgb(220, 221, 224);
-  border-width: thin;
+  border-width: thin!important;
   border-top-left-radius: 10px;
   padding-left: 15px;
   padding-right: 15px;
@@ -75,7 +75,7 @@ code {
 .trac-logo-btn{
   background-color: #f7f8fa;
   border: solid rgb(220, 221, 224);
-  border-width: thin;
+  border-width: thin!important;
   border-left: none;
   width: 83.65px;
   height: 48px;
@@ -86,7 +86,7 @@ code {
 .moto-logo-btn{
   background-color: #f7f8fa;
   border: solid rgb(220, 221, 224);
-  border-width: thin;
+  border-width: thin!important;
   border-left: none;
   border-top-right-radius: 10px;
   width: 82.65px;
@@ -162,7 +162,7 @@ padding: 0px 12px 0px 12px;
   
 }
 
-#Lari{
+.Lari{
   border: none;
   border-radius: 50%;
   /* background-color: white; */
@@ -170,7 +170,7 @@ padding: 0px 12px 0px 12px;
 }
 
 
-#Dolar{
+.Dolar{
 border: none;
 border-radius: 50%;
 font-weight: bold;
@@ -178,19 +178,19 @@ font-weight: bold;
 
 }
 
-#Lari:focus{
+/* #Lari:focus{
   width: 24px;
   height: 24px;
-  /* color: white;
-  background-color: #272a37 */
-}
+  color: white;
+  background-color: #272a37
+} */
 
-#Dolar:focus{
+/* #Dolar:focus{
   width: 24px;
   height: 24px;
-  /* color: white;
-  background-color: #272a37   */
-}
+  color: white;
+  background-color: #272a37  
+} */
 
 
 .price-input-holder{

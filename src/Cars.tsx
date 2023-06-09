@@ -22,15 +22,30 @@ function Cars() {
         IncreasingMileage = 6,
     }
 
+    enum PeriodOrder {
+        H1 = 1,
+        H2 = 2,
+        H3 = 3,
+        D1 = 4,
+        D2 = 5,
+        D3 = 6,
+        W1 = 7,
+        W2 = 8,
+        W3 = 9,
+        Period = 10,
+
+    }
+
     const [dark, setDark] = useState<boolean>(true)
     const [clickedCar, setClickedCar] = useState<boolean>(true)
 
+
     const clickedCarTheme = {
-        borderBottom: 'solid #fd4100',
-        borderWidth: 'thin',
+        borderBottom: clickedCar ? 'solid #fd4100' : 'solid rgb(220, 221, 224)',
+        // borderWidth: clickedCar ? 'thin' : 'thin',
     }
 
-    const carLogoFill = clickedCar ? '#fd4100' : 'none'
+    const carLogoFill = clickedCar ? '#fd4100' : "#7D7F87"
 
 
 
@@ -39,6 +54,7 @@ function Cars() {
         color: dark ? 'white' : 'black',
         width: '24px',
         height: '24px',
+        cursor: 'pointer',
     }
 
     const theme2 = {
@@ -47,10 +63,11 @@ function Cars() {
         color: dark ? 'black' : 'white',
         width: '24px',
         height: '24px',
-
+        cursor: 'pointer',
     }
 
     const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DecreasingDate);
+    const [periodOrder, setPeriodOrder] = useState<PeriodOrder>(PeriodOrder.Period);
 
     const [manufacturer, setManufacturer] = useState<any[]>([]);
     const [carMakes, setCarMakes] = useState<any[]>([]);
@@ -179,7 +196,127 @@ function Cars() {
 
         setProducts(sortedProducts);
     };
+    const handlePeriod = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedPeriod = parseInt(event.target.value);
+        setPeriodOrder(selectedPeriod as PeriodOrder);
+        sortProductsByPeriod(selectedPeriod as PeriodOrder);
+    };
 
+    const sortProductsByPeriod = (selectedPeriod: PeriodOrder) => {
+        let sortedProducts: any[] = products;
+        const date = new Date()
+
+        switch (selectedPeriod) {
+            case PeriodOrder.H1:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+                    return Math.abs(dateA.getHours() - date.getHours()) <= 1
+
+                })
+                break;
+            case PeriodOrder.H2:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+
+                    return Math.abs(dateA.getHours() - date.getHours()) <= 2
+
+                })
+                break;
+            case PeriodOrder.H3:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+
+                    return Math.abs(dateA.getHours() - date.getHours()) <= 3
+
+                })
+                break;
+            case PeriodOrder.D1:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+                    return Math.abs(dateA.getDate() - date.getDate()) <= 1 && dateA.getMonth() === date.getMonth() + 1
+
+                })
+                break;
+            case PeriodOrder.D2:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+
+                    return Math.abs(dateA.getDate() - date.getDate()) <= 2 && dateA.getMonth() == date.getMonth() + 1
+
+                })
+                break;
+            case PeriodOrder.D3:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+                    return Math.abs(dateA.getDate() - date.getDate()) <= 3 && dateA.getMonth() == date.getMonth() + 1
+
+                })
+                break;
+            case PeriodOrder.W1:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+                    return Math.abs(dateA.getDate() - date.getDate()) <= 7 && dateA.getMonth() == date.getMonth() + 1
+
+                })
+
+                break;
+            case PeriodOrder.W2:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+                    return Math.abs(dateA.getDate() - date.getDate()) <= 14 && dateA.getMonth() == date.getMonth() + 1
+
+                })
+                break;
+            case PeriodOrder.W2:
+                sortedProducts = [...products].filter((a) => {
+                    const splitA: string[] = a.order_date.split(" ")
+                    const dateStringA1: string[] = splitA[0].split("-")
+                    const dateStringA2: string[] = splitA[1].split(":")
+                    const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
+                    return Math.abs(dateA.getDate() - date.getDate()) <= 28 && dateA.getMonth() == date.getMonth() + 1
+
+                })
+
+                break;
+            case PeriodOrder.Period:
+                sortedProducts = products;
+                break;
+            default:
+                sortedProducts = products;
+                break;
+        }
+
+        setProducts(sortedProducts);
+    };
+
+    const carCount = products.filter((item) => {
+        const manuf = manufacturer.filter((man) => man.man_id === item.man_id);
+        return item.man_id <= 533;
+    }).length;
 
     return (
         <div className='All'>
@@ -188,7 +325,7 @@ function Cars() {
                     {/* <div className='car-logo-div'> */}
 
                     <button className='car-logo-btn' style={clickedCarTheme} onClick={() => setClickedCar(!clickedCar)}>
-                        <svg width="24" height="24" viewBox="0 0 28 28" fill={carLogoFill} xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_473_27752)"><path className='car-logo-path' d="M7.79069 4.66675C6.84001 4.66675 5.97549 5.25115 5.6237 6.13648L3.78483 10.7302L2.39485 11.1951C0.968812 11.6698 0 13.0128 0 14.5151V21.0001C7e-05 21.6444 0.522363 22.1667 1.16667 22.1668H3.91472C4.57602 23.538 5.96966 24.5001 7.58334 24.5001C9.19701 24.5001 10.5907 23.538 11.252 22.1668H15.5814C16.2427 23.538 17.6363 24.5001 19.25 24.5001C20.8637 24.5001 22.2573 23.538 22.9186 22.1668H26.8333C27.4776 22.1667 27.9999 21.6444 28 21.0001V14.7475C28 13.0864 26.8151 11.6417 25.1859 11.3158L21.6449 10.6072L17.9443 5.98153C17.2808 5.14991 16.274 4.66676 15.2122 4.66676L7.79069 4.66675ZM7.79069 7.00008H10.5V10.5001H6.38932L7.79069 7.00008ZM12.8333 7.00008H15.2122C15.5668 7.00008 15.9006 7.16087 16.1214 7.43758L18.571 10.5001H12.8333V7.00008ZM4.8558 12.8334H20.8861L24.7279 13.6036C25.2803 13.7141 25.6667 14.1849 25.6667 14.7475V19.8334H23.2741C22.9855 17.8671 21.2916 16.3334 19.25 16.3334C17.2084 16.3334 15.5145 17.8671 15.2259 19.8334H11.6074C11.3188 17.8671 9.62492 16.3334 7.58334 16.3334C5.54175 16.3334 3.84788 17.8671 3.55924 19.8334H2.33333V14.5151C2.33333 14.0083 2.65057 13.5676 3.13086 13.4077L4.8558 12.8334ZM7.58334 18.6668C8.56365 18.6668 9.33334 19.4364 9.33334 20.4168C9.33334 21.3971 8.56365 22.1668 7.58334 22.1668C6.60302 22.1668 5.83333 21.3971 5.83333 20.4168C5.83333 19.4364 6.60302 18.6668 7.58334 18.6668ZM19.25 18.6668C20.2303 18.6668 21 19.4364 21 20.4168C21 21.3971 20.2303 22.1668 19.25 22.1668C18.2697 22.1668 17.5 21.3971 17.5 20.4168C17.5 19.4364 18.2697 18.6668 19.25 18.6668Z" fill="#7D7F87"></path></g><defs><clipPath id="clip0_473_27752"><rect width="28" height="28" fill="white"></rect></clipPath></defs></svg>
+                        <svg width="24" height="24" viewBox="0 0 28 28" fill='none' xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_473_27752)"><path className='car-logo-path' d="M7.79069 4.66675C6.84001 4.66675 5.97549 5.25115 5.6237 6.13648L3.78483 10.7302L2.39485 11.1951C0.968812 11.6698 0 13.0128 0 14.5151V21.0001C7e-05 21.6444 0.522363 22.1667 1.16667 22.1668H3.91472C4.57602 23.538 5.96966 24.5001 7.58334 24.5001C9.19701 24.5001 10.5907 23.538 11.252 22.1668H15.5814C16.2427 23.538 17.6363 24.5001 19.25 24.5001C20.8637 24.5001 22.2573 23.538 22.9186 22.1668H26.8333C27.4776 22.1667 27.9999 21.6444 28 21.0001V14.7475C28 13.0864 26.8151 11.6417 25.1859 11.3158L21.6449 10.6072L17.9443 5.98153C17.2808 5.14991 16.274 4.66676 15.2122 4.66676L7.79069 4.66675ZM7.79069 7.00008H10.5V10.5001H6.38932L7.79069 7.00008ZM12.8333 7.00008H15.2122C15.5668 7.00008 15.9006 7.16087 16.1214 7.43758L18.571 10.5001H12.8333V7.00008ZM4.8558 12.8334H20.8861L24.7279 13.6036C25.2803 13.7141 25.6667 14.1849 25.6667 14.7475V19.8334H23.2741C22.9855 17.8671 21.2916 16.3334 19.25 16.3334C17.2084 16.3334 15.5145 17.8671 15.2259 19.8334H11.6074C11.3188 17.8671 9.62492 16.3334 7.58334 16.3334C5.54175 16.3334 3.84788 17.8671 3.55924 19.8334H2.33333V14.5151C2.33333 14.0083 2.65057 13.5676 3.13086 13.4077L4.8558 12.8334ZM7.58334 18.6668C8.56365 18.6668 9.33334 19.4364 9.33334 20.4168C9.33334 21.3971 8.56365 22.1668 7.58334 22.1668C6.60302 22.1668 5.83333 21.3971 5.83333 20.4168C5.83333 19.4364 6.60302 18.6668 7.58334 18.6668ZM19.25 18.6668C20.2303 18.6668 21 19.4364 21 20.4168C21 21.3971 20.2303 22.1668 19.25 22.1668C18.2697 22.1668 17.5 21.3971 17.5 20.4168C17.5 19.4364 18.2697 18.6668 19.25 18.6668Z" fill={carLogoFill}></path></g><defs><clipPath id="clip0_473_27752"><rect width="28" height="28" fill="white"></rect></clipPath></defs></svg>
                     </button>
 
                     {/* </div> */}
@@ -358,8 +495,8 @@ function Cars() {
                         <div className='priceTag'>
                             <p>ფასი</p>
                             <div className='currancy-btns'>
-                                <button id='Lari' style={theme} onClick={() => setDark(!dark)}>₾</button>
-                                <button id='Dolar' style={theme2} onClick={() => setDark(!dark)}>$</button>
+                                <button className='Lari' style={theme} onClick={() => setDark(!dark)}>₾</button>
+                                <button className='Dolar' style={theme2} onClick={() => setDark(!dark)}>$</button>
                             </div>
                         </div>
                         <div className='price-input-holder'>
@@ -371,26 +508,26 @@ function Cars() {
                 </div>
 
                 <div className='searchContainer'>
-                    <button id='search-btn'>ძებნა</button>
+                    <button id='search-btn'>ძებნა {carCount}</button>
                 </div>
 
             </div >
             <div className='cars'>
                 <div>
                     <div className='Another-filter-container'>
-                        <p> განცხადება</p>
+                        <p>{carCount} განცხადება</p>
                         <div>
-                            <select className='period-select'>
-                                <option disabled selected hidden>პერიოდი</option>
-                                <option>1 საათი</option>
-                                <option>2 საათი</option>
-                                <option>3 საათი</option>
-                                <option>1 დღე</option>
-                                <option>2 დღე</option>
-                                <option>3 დღე</option>
-                                <option>1 კვირა</option>
-                                <option>2 კვირა</option>
-                                <option>3 კვირა</option>
+                            <select className='period-select' value={periodOrder.toString()} onChange={handlePeriod}>
+                                <option value='10' disabled selected hidden>პერიოდი</option>
+                                <option value='1'>1 საათი</option>
+                                <option value='2'>2 საათი</option>
+                                <option value='3'>3 საათი</option>
+                                <option value='4'>1 დღე</option>
+                                <option value='5'>2 დღე</option>
+                                <option value='6'>3 დღე</option>
+                                <option value='7'>1 კვირა</option>
+                                <option value='8'>2 კვირა</option>
+                                <option value='9'>3 კვირა</option>
 
                             </select>
 
@@ -422,8 +559,9 @@ function Cars() {
 
                             const wheel = item.right_wheel ? 'მარჯვენა' : 'მარცხენა'
                             const customs = item.customs_passed ? '✓ განბაჟებული' : 'განბაჟება'
-                            const theme = item.customs_passed ? { color: '#26b753' } : { color: '#ff3b30' }
-
+                            const customsTheme = item.customs_passed ? { color: '#26b753' } : { color: '#ff3b30' }
+                            const priceValue = dark ? item.price_value : item.price_usd
+                            const priceValueTheme = { fontFamily: 'TBCXMedium', fontSize: '20px', color: '#272a37', marginRight: '5px' }
                             // const model = carMakes2.filter((model) => model.model_id == item.model_id)
                             return < div className='car-container' >
                                 <section>
@@ -436,21 +574,39 @@ function Cars() {
                                             <p className='year'>{item.prod_year} წ</p>
                                         </div>
                                         <div>
-                                            <p className='customs' style={theme}>{customs}</p>
+                                            <p className='customs' style={customsTheme}>{customs}</p>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div style={{ display: 'flex', marginBottom: '20px' }}>
-                                            <div style={{ fontFamily: 'TBCXRegular', fontSize: '13px', marginRight: '18.5%', color: '#272a37', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><span style={{ marginRight: '12px' }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.525 2c-.388 0-.703.35-.703.783 0 .433.315.783.703.783h1.808v1.707H5.686a.662.662 0 0 0-.465.19L4.004 6.665h-.667a.654.654 0 0 0-.658.65v1.23H1.5V7.134a.76.76 0 0 0-.75-.77.76.76 0 0 0-.75.77v4.95c0 .425.336.77.75.77a.76.76 0 0 0 .75-.77v-1.998H2.68v1.871c0 .36.294.65.658.65h.667l1.217 1.203c.124.121.29.19.465.19h5.17c.142 0 .28-.046.395-.13l1.88-1.393a.648.648 0 0 0 .263-.52v-1.871H14.5v1.998c0 .425.336.77.75.77a.76.76 0 0 0 .75-.77v-4.95a.76.76 0 0 0-.75-.77.76.76 0 0 0-.75.77v1.411h-1.106v-1.23a.646.646 0 0 0-.193-.46l-1.41-1.392a.662.662 0 0 0-.465-.19H8.74V3.566h1.807c.389 0 .704-.35.704-.783 0-.432-.315-.783-.704-.783H5.525zm-.783 5.775 1.217-1.202h5.094l1.025 1.011v4.049L10.637 12.7H5.959l-1.217-1.202a.662.662 0 0 0-.465-.19h-.282V7.964h.282a.662.662 0 0 0 .465-.19z" fill="#9CA2AA"></path></svg></span>
-                                                {vol} ბენზინი</div>
-                                            <div ><div style={{ fontFamily: 'TBCXRegular', fontSize: '13px', color: '#272a37', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><span style={{ marginRight: '12px' }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6.3" stroke="#9CA2AA" stroke-width="1.4"></circle><circle cx="8" cy="8" r="1.3" stroke="#9CA2AA" stroke-width="1.4"></circle><path d="M12 8a4 4 0 0 0-8 0" stroke="#9CA2AA" stroke-width="1.4" stroke-linecap="round"></path><path d="m9 7 1.5-1.5" stroke="#9CA2AA" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                                                {item.car_run_km} კმ</div></div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <div style={{ width: '397.8px', height: '79px' }}>
+                                            <div style={{ display: 'flex', }}>
+                                                <div style={{ width: '50%', padding: '10px 12px 10px 12px' }}>
+                                                    <div style={{ fontFamily: 'TBCXRegular', fontSize: '13px', color: '#272a37', display: 'flex', }}><span style={{ marginRight: '12px' }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.525 2c-.388 0-.703.35-.703.783 0 .433.315.783.703.783h1.808v1.707H5.686a.662.662 0 0 0-.465.19L4.004 6.665h-.667a.654.654 0 0 0-.658.65v1.23H1.5V7.134a.76.76 0 0 0-.75-.77.76.76 0 0 0-.75.77v4.95c0 .425.336.77.75.77a.76.76 0 0 0 .75-.77v-1.998H2.68v1.871c0 .36.294.65.658.65h.667l1.217 1.203c.124.121.29.19.465.19h5.17c.142 0 .28-.046.395-.13l1.88-1.393a.648.648 0 0 0 .263-.52v-1.871H14.5v1.998c0 .425.336.77.75.77a.76.76 0 0 0 .75-.77v-4.95a.76.76 0 0 0-.75-.77.76.76 0 0 0-.75.77v1.411h-1.106v-1.23a.646.646 0 0 0-.193-.46l-1.41-1.392a.662.662 0 0 0-.465-.19H8.74V3.566h1.807c.389 0 .704-.35.704-.783 0-.432-.315-.783-.704-.783H5.525zm-.783 5.775 1.217-1.202h5.094l1.025 1.011v4.049L10.637 12.7H5.959l-1.217-1.202a.662.662 0 0 0-.465-.19h-.282V7.964h.282a.662.662 0 0 0 .465-.19z" fill="#9CA2AA"></path></svg></span>
+                                                        {vol} ბენზინი</div>
+                                                </div>
+                                                <div style={{ width: '50%', padding: '10px 12px 10px 12px' }}>
+                                                    <div ><div style={{ fontFamily: 'TBCXRegular', fontSize: '13px', color: '#272a37', display: 'flex', }}><span style={{ marginRight: '12px' }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6.3" stroke="#9CA2AA" stroke-width="1.4"></circle><circle cx="8" cy="8" r="1.3" stroke="#9CA2AA" stroke-width="1.4"></circle><path d="M12 8a4 4 0 0 0-8 0" stroke="#9CA2AA" stroke-width="1.4" stroke-linecap="round"></path><path d="m9 7 1.5-1.5" stroke="#9CA2AA" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                                                        {item.car_run_km} კმ</div></div>
+                                                </div>
+                                            </div>
+                                            <div style={{ display: 'flex' }}>
+                                                <div style={{ width: '50%', padding: '10px 12px 10px 12px' }}>
+                                                    <div style={{ fontFamily: 'TBCXRegular', fontSize: '13px', color: '#272a37', display: 'flex', }}><span style={{ marginRight: '12px' }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.6" y="7.6" width="10.8" height="7.8" rx="1.2" stroke="#8C929B" stroke-width="1.2"></rect><path d="M8 5v5" stroke="#8C929B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 12v1.5" stroke="#8C929B" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="2.5" r="1.8" stroke="#8C929B" stroke-width="1.4"></circle><path d="M5 10v3M11 10v3" stroke="#8C929B" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                                                        მექანიკა</div>
+                                                </div>
+                                                <div style={{ width: '50%', padding: '10px 12px 10px 12px' }}>
+                                                    <div ><div style={{ fontFamily: 'TBCXRegular', fontSize: '13px', color: '#272a37', display: 'flex', }}><span style={{ marginRight: '12px' }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6.3" stroke="#9CA2AA" stroke-width="1.4"></circle><circle cx="8" cy="8" r="1.3" stroke="#9CA2AA" stroke-width="1.4"></circle><path d="m9.5 8 4-1.5M6.214 8 2 7.299M8 9.5V14" stroke="#9CA2AA" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                                                        {wheel}</div></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div style={{ display: 'flex' }}>
-                                            <div style={{ fontFamily: 'TBCXRegular', fontSize: '13px', marginRight: '22.5%', color: '#272a37', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><span style={{ marginRight: '12px' }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.6" y="7.6" width="10.8" height="7.8" rx="1.2" stroke="#8C929B" stroke-width="1.2"></rect><path d="M8 5v5" stroke="#8C929B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 12v1.5" stroke="#8C929B" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="2.5" r="1.8" stroke="#8C929B" stroke-width="1.4"></circle><path d="M5 10v3M11 10v3" stroke="#8C929B" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                                                მექანიკა</div>
-                                            <div ><div style={{ fontFamily: 'TBCXRegular', fontSize: '13px', color: '#272a37', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><span style={{ marginRight: '12px' }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6.3" stroke="#9CA2AA" stroke-width="1.4"></circle><circle cx="8" cy="8" r="1.3" stroke="#9CA2AA" stroke-width="1.4"></circle><path d="m9.5 8 4-1.5M6.214 8 2 7.299M8 9.5V14" stroke="#9CA2AA" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                                                {wheel}</div></div>
+                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                            <p style={priceValueTheme}>{priceValue}</p>
+                                            <div className='currancy-btns'>
+                                                <button className='Lari' style={theme} onClick={() => setDark(!dark)}>₾</button>
+                                                <button className='Dolar' style={theme2} onClick={() => setDark(!dark)}>$</button>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div className='lowest-container'>
