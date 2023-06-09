@@ -54,10 +54,10 @@ code {
   fill: #fd4100;
 } */
 
-.car-logo-btn:focus{
+/* .car-logo-btn:focus{
   border-bottom: solid #fd4100;
   border-width: thin;
-}
+} */
 .car-logo-btn:hover{
   background-color: white;
   cursor: pointer;
@@ -165,7 +165,7 @@ padding: 0px 12px 0px 12px;
 #Lari{
   border: none;
   border-radius: 50%;
-  background-color: white;
+  /* background-color: white; */
   font-weight: bold;
 }
 
@@ -174,22 +174,22 @@ padding: 0px 12px 0px 12px;
 border: none;
 border-radius: 50%;
 font-weight: bold;
-background-color: white;
+/* background-color: white; */
 
 }
 
 #Lari:focus{
   width: 24px;
   height: 24px;
-  color: white;
-  background-color: #272a37
+  /* color: white;
+  background-color: #272a37 */
 }
 
 #Dolar:focus{
   width: 24px;
   height: 24px;
-  color: white;
-  background-color: #272a37  
+  /* color: white;
+  background-color: #272a37   */
 }
 
 
@@ -226,6 +226,8 @@ align-items: center;
 .cars{
   display: flex;
   flex-direction: column;
+  margin-left: 20px;
+  margin-top: 30px;
 }
 
 .car-container{
@@ -258,6 +260,7 @@ img{
 
 .title{
   display: flex;
+  justify-content: space-between;
 }
 
 .name{
@@ -275,4 +278,71 @@ img{
   font-size: 14px;
   font-weight: bolder;
   line-height: 1.2;
+}
+
+.customs{    
+  font-family: TBCXRegular!important;
+  font-size: 12px;
+  
+}
+
+.lowest-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.views{
+  font-family: TBCXRegular!important;
+  font-size: 12px!important;
+  color: #8996ae!important;
+}
+
+.msg{
+  margin-right: 8px;
+}
+
+.eye{
+  margin-right: 8px;
+}
+
+
+/* CarList */
+.Another-filter-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.period-select{
+  height: 40px;
+  background-color: #0000!important;
+  cursor: 'pointer';
+  border-width: 1px!important;
+  border-style: solid;
+  border-color: #d4d4e0;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #454857!important;
+  font-family: TBCXRegular;
+  width: 113.22px;
+  padding-left: 12px;
+  padding-right: 8px;
+  margin-right: 10px;
+}
+
+.sort-select{
+  height: 40px;
+  background-color: #0000!important;
+  cursor: 'pointer';
+  border-width: 1px!important;
+  border-style: solid;
+  border-color: #d4d4e0;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #454857!important;
+  font-family: TBCXRegular;
+  width: 171.5px;
+  padding-left: 12px;
+  padding-right: 8px;
+
 }

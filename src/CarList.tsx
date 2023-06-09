@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import './index.css';
 
 
 function CarList() {
@@ -71,32 +72,35 @@ function CarList() {
     return (
         <div >
             <div className='Another-filter-container'>
-                <select>
-                    <option disabled selected hidden>პერიოდი</option>
-                    <option>1 საათი</option>
-                    <option>2 საათი</option>
-                    <option>3 საათი</option>
-                    <option>1 დღე</option>
-                    <option>2 დღე</option>
-                    <option>3 დღე</option>
-                    <option>1 კვირა</option>
-                    <option>2 კვირა</option>
-                    <option>3 კვირა</option>
+                <p> განცხადება</p>
+                <div>
+                    <select className='period-select'>
+                        <option disabled selected hidden>პერიოდი</option>
+                        <option>1 საათი</option>
+                        <option>2 საათი</option>
+                        <option>3 საათი</option>
+                        <option>1 დღე</option>
+                        <option>2 დღე</option>
+                        <option>3 დღე</option>
+                        <option>1 კვირა</option>
+                        <option>2 კვირა</option>
+                        <option>3 კვირა</option>
 
-                </select>
+                    </select>
 
-                <select>
-                    <option>თარიღი კლებადი</option>
-                    <option>თარიღი ზრდადი</option>
-                    <option>ფასი კლებადი</option>
-                    <option onClick={() => sortByDecreasingPrice}>ფასი ზრდადი</option>
-                    <option>გარბენი კლებადი</option>
-                    <option>გარბენი კლებადი</option>
-                </select>
+                    <select className='sort-select'>
+                        <option>თარიღი კლებადი</option>
+                        <option>თარიღი ზრდადი</option>
+                        <option>ფასი კლებადი</option>
+                        <option onClick={() => sortByDecreasingPrice}>ფასი ზრდადი</option>
+                        <option>გარბენი კლებადი</option>
+                        <option>გარბენი კლებადი</option>
+                    </select>
+                </div>
             </div>
 
 
-        </div>
+        </div >
     )
 }
 

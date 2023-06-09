@@ -5,7 +5,11 @@ customs => განბაჟების საფასური
 location_id => which is which 
 parent_loc_id?
 
+რატომაა ზოგი ლურჯი
+
 
 
 order_date
 right_wheel
+
+display: none
