@@ -1,4 +1,4 @@
-import React, { ComponentType, useEffect, useState } from 'react'
+import React, { ComponentType, MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import './index.css';
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
@@ -73,6 +73,10 @@ function Cars() {
     const [carMakes, setCarMakes] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([])
     const [products, setProducts] = useState<any[]>([]);
+
+    const [carModels, setCarModels] = useState<any[]>([]);
+    const [carModel, setCarModel] = useState<any[]>([]);
+
 
     const [selectedType, setSelectedType] = useState<string>('');
     const [selectedManufacturer, setSelectedManufacturer] = useState<string[]>([]);
@@ -151,7 +155,26 @@ function Cars() {
         };
         fetchData();
     }, []);
+    const [productModels, setProductModels] = useState<any[]>([]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const modelPromises = products.map(async (item) => {
+                const response = await fetch(`https://api2.myauto.ge/ka/getManModels?man_id=${item.man_id}`);
+                const jsonData = await response.json();
+                return jsonData.data;
+            });
+
+            const fetchedModels = await Promise.all(modelPromises);
+            setProductModels(fetchedModels);
+        };
+
+        fetchData();
+    }, [products]);
+
+    useEffect(() => {
+        console.log(productModels);
+    }, [productModels]);
 
     const handleSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedSortOrder = parseInt(event.target.value);
@@ -213,7 +236,7 @@ function Cars() {
                     const dateStringA1: string[] = splitA[0].split("-")
                     const dateStringA2: string[] = splitA[1].split(":")
                     const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
-                    return Math.abs(dateA.getHours() - date.getHours()) <= 1
+                    return Math.abs(dateA.getHours() - date.getHours()) <= 1 && dateA.getMonth() === date.getMonth() + 1 && dateA.getDate() === date.getDate() && dateA.getFullYear() === date.getFullYear()
 
                 })
                 break;
@@ -224,7 +247,7 @@ function Cars() {
                     const dateStringA2: string[] = splitA[1].split(":")
                     const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
 
-                    return Math.abs(dateA.getHours() - date.getHours()) <= 2
+                    return Math.abs(dateA.getHours() - date.getHours()) <= 2 && dateA.getMonth() === date.getMonth() + 1 && dateA.getDate() === date.getDate() && dateA.getFullYear() === date.getFullYear()
 
                 })
                 break;
@@ -235,7 +258,7 @@ function Cars() {
                     const dateStringA2: string[] = splitA[1].split(":")
                     const dateA: Date = new Date(parseInt(dateStringA1[0]), parseInt(dateStringA1[1]), parseInt(dateStringA1[2]), parseInt(dateStringA2[0]), parseInt(dateStringA2[1]), parseInt(dateStringA2[2]))
 
-                    return Math.abs(dateA.getHours() - date.getHours()) <= 3
+                    return Math.abs(dateA.getHours() - date.getHours()) <= 3 && dateA.getMonth() === date.getMonth() + 1 && dateA.getDate() === date.getDate() && dateA.getFullYear() === date.getFullYear()
 
                 })
                 break;
@@ -547,8 +570,18 @@ function Cars() {
                 <div>
                     {products && products.map((item) => {
                         const manuf = manufacturer.filter((man) => man.man_id == item.man_id)
+                        const model1 = productModels && productModels.map((make) => {
+                            const model2 = make.filter((model: any) => model.model_id === item.model_id)
+                            // console.log(model1)
+                            return model2
+                        })
+                        const model = model1.filter((m: any) => m.length !== 0)
+
+                        const actualModel = model.length > 0 && model[0][0]
+
+                        // console.log(model[0][0])
                         let vol = ''
-                        if (item.man_id <= 533 && manuf[0].is_car === '1') {
+                        if (item.man_id <= 533 && actualModel.is_car === true) {
                             if (item.engine_volume % 1000 == 0) {
                                 let volume = item.engine_volume / 1000
                                 vol = `${volume}.0`
@@ -556,6 +589,8 @@ function Cars() {
                                 let volume = item.engine_volume / 1000
                                 vol = `${volume}`
                             }
+
+
 
                             const wheel = item.right_wheel ? 'მარჯვენა' : 'მარცხენა'
                             const customs = item.customs_passed ? '✓ განბაჟებული' : 'განბაჟება'
@@ -570,7 +605,7 @@ function Cars() {
                                 <div className='info'>
                                     <div className='title'>
                                         <div style={{ display: 'flex' }}>
-                                            <p className='name'>{manuf && manuf[0].man_name} {item.car_model}</p>
+                                            <p className='name'>{manuf && manuf[0].man_name} {model && model[0][0].model_name} {item.car_model}</p>
                                             <p className='year'>{item.prod_year} წ</p>
                                         </div>
                                         <div>
