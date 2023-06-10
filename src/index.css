@@ -32,6 +32,8 @@ code {
   margin-top: 30px;
   margin-left: 100px;
   border: none;
+  
+
 }
 
 .auto-logos{
@@ -50,14 +52,6 @@ code {
 
 }
 
-/* .car-logo-path{
-  fill: #fd4100;
-} */
-
-/* .car-logo-btn:focus{
-  border-bottom: solid #fd4100;
-  border-width: thin;
-} */
 .car-logo-btn:hover{
   background-color: white;
   cursor: pointer;
@@ -97,16 +91,16 @@ code {
     
 
 .filter{
-  width: 200px;
-  height: 352px;
-  padding: 0px 24px 24px 24px;
   background-color: white;
   display: flex;
   flex-direction: column;
   border: solid rgb(220, 221, 224);
   border-width: thin;
   border-top: none;
-  
+  width: 200px;
+  height: 390px;
+  padding: 0px 24px 24px 24px;
+
 }
 
 label{
@@ -119,10 +113,17 @@ label{
 
 }
 
-select{
-  width: 198px;
-  height: 40px;
-
+.deal-type-select{
+  width: 200px!important;
+  height: 40px!important;
+  background-color: #0000!important;
+  cursor: 'pointer';
+  border-width: 1px!important;
+  border-style: solid;
+  border-color: #d4d4e0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: TBCXRegular;
 }
 
 .priceContainer{
@@ -156,16 +157,11 @@ padding: 0px 12px 0px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: solid rgb(216, 219, 226);
-  border-radius: 10px;
-  height: 24px; */
-  
 }
 
 .Lari{
   border: none;
   border-radius: 50%;
-  /* background-color: white; */
   font-weight: bold;
 }
 
@@ -174,24 +170,7 @@ padding: 0px 12px 0px 12px;
 border: none;
 border-radius: 50%;
 font-weight: bold;
-/* background-color: white; */
-
 }
-
-/* #Lari:focus{
-  width: 24px;
-  height: 24px;
-  color: white;
-  background-color: #272a37
-} */
-
-/* #Dolar:focus{
-  width: 24px;
-  height: 24px;
-  color: white;
-  background-color: #272a37  
-} */
-
 
 .price-input-holder{
 display: flex;
@@ -345,4 +324,33 @@ img{
   padding-left: 12px;
   padding-right: 8px;
 
+}
+
+/* Pagination css */
+
+.pagination {
+  display: flex;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pagination a {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  color: #5e697d;
+}
+
+.pagination__link {
+  font-weight: bold;
+}
+
+.pagination__link--active a {
+  color: #ff4404;
+  /* background: #6c7ac9; */
+}
+
+.pagination__link--disabled a {
+  color: white;
+  border: none;
 }

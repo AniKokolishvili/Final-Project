@@ -69,34 +69,6 @@ function CarList() {
         fetchData();
     }, []);
 
-    // let productModels: any[] //MutableRefObject<any[]>[];
-    // useEffect(() => {
-
-    //     productModels = products.map((item) => {
-    //         // return { man_id: item.man_id, model_id: item.model_id }
-    //         // let carModel1: any[]
-    //         const fetchData = async () => {
-    //             const response = await fetch(`https://api2.myauto.ge/ka/getManModels?man_id=${item.man_id}`);
-    //             const jsonData = await response.json();
-    //             setCarModel(jsonData.data)
-    //             // console.log(carModel)
-    //             return carModel
-    //         };
-
-    //         return fetchData()
-
-    //     })
-
-
-
-
-    // }, [])
-
-    // useEffect(() => {
-    //     //     setCarModels(productModels)
-    //     console.log(productModels)
-    //     //     console.log(carModels)
-    // }, [])
 
     return (
         <div >
