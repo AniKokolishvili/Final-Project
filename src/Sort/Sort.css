@@ -1,0 +1,39 @@
+.Another-filter-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .period-select{
+    height: 40px;
+    background-color: #0000!important;
+    cursor: 'pointer';
+    border-width: 1px!important;
+    border-style: solid;
+    border-color: #d4d4e0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #454857!important;
+    font-family: TBCXRegular;
+    width: 113.22px;
+    padding-left: 12px;
+    padding-right: 8px;
+    margin-right: 10px;
+  }
+  
+  .sort-select{
+    height: 40px;
+    background-color: #0000!important;
+    cursor: 'pointer';
+    border-width: 1px!important;
+    border-style: solid;
+    border-color: #d4d4e0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #454857!important;
+    font-family: TBCXRegular;
+    width: 171.5px;
+    padding-left: 12px;
+    padding-right: 8px;
+  
+  }
