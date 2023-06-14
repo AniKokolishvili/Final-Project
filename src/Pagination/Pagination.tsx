@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 import './Pagination.css';
 
 
-function Pagination({ manufacturer, products, dark, setDark }: { manufacturer: any[], products: any[], dark: boolean, setDark: any }) {
+function Pagination({ manufacturer, products, dark, setDark, searchQuery }: { manufacturer: any[], products: any[], dark: boolean, setDark: any, searchQuery: any }) {
 
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [productModels, setProductModels] = useState<any[]>([]);
@@ -26,10 +26,12 @@ function Pagination({ manufacturer, products, dark, setDark }: { manufacturer: a
         cursor: 'pointer',
     }
 
+    const filteredProducts = products.filter((item) => item.price_value >= searchQuery)
+
 
     useEffect(() => {
         const fetchData = async () => {
-            const modelPromises = products.map(async (item) => {
+            const modelPromises = filteredProducts.map(async (item) => {
                 const response = await fetch(`https://api2.myauto.ge/ka/getManModels?man_id=${item.man_id}`);
                 const jsonData = await response.json();
                 return jsonData.data;
@@ -48,7 +50,7 @@ function Pagination({ manufacturer, products, dark, setDark }: { manufacturer: a
     }
     const PER_PAGE = 5;
     const offset = currentPage * PER_PAGE;
-    const currentPageData = products.slice(offset, offset + PER_PAGE)
+    const currentPageData = filteredProducts.slice(offset, offset + PER_PAGE)
         .map((item) => {
             const manuf = manufacturer.filter((man) => man.man_id == item.man_id)
             const model1 = productModels && productModels.map((make) => {

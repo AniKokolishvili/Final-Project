@@ -1,7 +1,7 @@
 import React, { ComponentType, MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import './index.css';
-import { BrowserRouter } from "react-router-dom";
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Select, {
     components,
     ControlProps,
@@ -141,9 +141,36 @@ function Cars() {
         return item.man_id <= 533;
     }).length;
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const queryParamValue = queryParams.get('search') || '';
+
+    const [searchQuery, setSearchQuery] = useState<string>(queryParamValue);
+
+    useEffect(() => {
+        setSearchQuery(queryParamValue);
+    }, [queryParamValue]);
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSearchSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const newSearchParams = new URLSearchParams();
+        newSearchParams.set('price/from', searchQuery);
+        newSearchParams.set('price/to', searchQuery);
+        navigate(`?${newSearchParams.toString()}`);
+    };
+
+    console.log('queryParamValue => ', queryParamValue)
+    console.log('queryParam => ', queryParams)
+    console.log('searchQuery => ', searchQuery)
+
     return (
         <div className='All'>
-            <div className='filterContainer'>
+            <form className='filterContainer' onSubmit={handleSearchSubmit}>
                 <div className='auto-logos'>
                     {/* <div className='car-logo-div'> */}
 
@@ -355,10 +382,12 @@ function Cars() {
                         }))}
                         closeMenuOnSelect={false}
                         hideSelectedOptions={false}
-                        onChange={(selectedOptions) =>
+                        onChange={(selectedOptions) => {
                             setSelectedCategory(
                                 selectedOptions ? selectedOptions.map((option) => option.value) : []
                             )
+
+                        }
                         }
                     />
                 </div>
@@ -374,25 +403,29 @@ function Cars() {
                             </div>
                         </div>
                         <div className='price-input-holder'>
-                            <input placeholder='დან'></input>
+                            <input placeholder='დან' onChange={handleSearchChange}></input>
                             <p>-</p>
                             <input placeholder='მდე'></input>
                         </div>
                     </div>
                 </div>
 
+
+
                 <div className='searchContainer'>
-                    <button id='search-btn'>ძებნა {carCount}</button>
+                    <button type="submit" id='search-btn'>ძებნა {carCount}</button>
                 </div>
 
-            </div >
+
+
+            </form >
             <div className='cars'>
                 <div>
                     <Sort products={products && products} setProducts={setProducts} carCount={carCount} />
                 </div>
 
                 <div>
-                    <Pagination manufacturer={manufacturer && manufacturer} products={products && products} dark={dark} setDark={setDark} />
+                    <Pagination manufacturer={manufacturer && manufacturer} products={products && products} dark={dark} setDark={setDark} searchQuery={searchQuery && searchQuery} />
                 </div>
 
             </div>
