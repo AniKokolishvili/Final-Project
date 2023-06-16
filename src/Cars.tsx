@@ -1,7 +1,7 @@
 import React, { ComponentType, MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import './index.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Select, {
     components,
     ControlProps,
@@ -12,6 +12,8 @@ import Select, {
 } from 'react-select';
 import Pagination from './Pagination/Pagination';
 import Sort from './Sort/Sort';
+
+
 
 function Cars() {
 
@@ -56,10 +58,15 @@ function Cars() {
     const [categories, setCategories] = useState<any[]>([])
     const [products, setProducts] = useState<any[]>([]);
 
+
     const [selectedType, setSelectedType] = useState<string>('');
     const [selectedManufacturer, setSelectedManufacturer] = useState<any[]>([]);
     const [selectedModel, setSelectedModel] = useState<string[][]>([[]]);
     const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+
+    const [priceFrom, setPriceFrom] = useState<string>('')
+    const [priceTo, setPriceTo] = useState<string>('')
+
 
     const [modelsToSelect, setModelsToSelect] = useState<any[]>([])
 
@@ -136,41 +143,72 @@ function Cars() {
     //     fetchData();
     // }, [selectedManufacturer, modelsToSelect]);
 
-    const carCount = products.filter((item) => {
+
+    const [filteredProducts, setFilteredProducts] = useState<typeof products>([]);
+    const [vehicleType, setVehicleType] = useState<string>('car')
+
+    useEffect(() => {
+        setFilteredProducts(products)
+    }, [products])
+
+
+    const handleSubmit = () => {
+        let filteredProducts1: any[] = []
+
+        if (
+            selectedManufacturer.length != 0
+            ||
+            selectedModel.length != 0
+            ||
+            selectedType != ''
+            ||
+            selectedCategory.length != 0
+        ) {
+            filteredProducts1 = (selectedType === '1') ? products.filter((item) => item.for_rent == false) : (selectedType === '0') ? products.filter((item) => item.for_rent == true) : products
+            filteredProducts1 = priceFrom ? dark ? filteredProducts1.filter((item) => item.price_value >= parseInt(priceFrom)) : filteredProducts1.filter((item) => item.price_usd >= parseInt(priceFrom)) : filteredProducts1
+            filteredProducts1 = priceTo ? dark ? filteredProducts1.filter((item) => item.price_value <= parseInt(priceTo)) : filteredProducts1.filter((item) => item.price_usd <= parseInt(priceTo)) : filteredProducts1
+
+            if (selectedManufacturer.length != 0) {
+                filteredProducts1 = filteredProducts1.filter((item1) =>
+                    selectedManufacturer.some((item2) => item1.man_id === parseInt(item2.value))
+                );
+            }
+            if (selectedCategory.length != 0) {
+                filteredProducts1 = filteredProducts1.filter((item1) =>
+                    selectedCategory.some((item2) => item1.category_id === item2)
+                );
+            }
+
+            if (clickedCar) {
+                setVehicleType('car')
+            } else if (clickedMoto) {
+                setVehicleType('moto')
+                filteredProducts1 = []
+            } else if (clickedTrac) {
+                setVehicleType('trac')
+                filteredProducts1 = []
+            } else {
+                setVehicleType('car')
+            }
+
+
+
+            setFilteredProducts(filteredProducts1)
+        } else {
+            setFilteredProducts(products)
+        }
+
+    }
+
+
+    const carCount = filteredProducts.filter((item) => {
         const manuf = manufacturer.filter((man) => man.man_id === item.man_id);
         return item.man_id <= 533;
     }).length;
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const queryParamValue = queryParams.get('search') || '';
-
-    const [searchQuery, setSearchQuery] = useState<string>(queryParamValue);
-
-    useEffect(() => {
-        setSearchQuery(queryParamValue);
-    }, [queryParamValue]);
-
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(e.target.value);
-    };
-
-    const handleSearchSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const newSearchParams = new URLSearchParams();
-        newSearchParams.set('price/from', searchQuery);
-        newSearchParams.set('price/to', searchQuery);
-        navigate(`?${newSearchParams.toString()}`);
-    };
-
-    console.log('queryParamValue => ', queryParamValue)
-    console.log('queryParam => ', queryParams)
-    console.log('searchQuery => ', searchQuery)
-
     return (
         <div className='All'>
-            <form className='filterContainer' onSubmit={handleSearchSubmit}>
+            <div className='filterContainer'>
                 <div className='auto-logos'>
                     {/* <div className='car-logo-div'> */}
 
@@ -218,7 +256,7 @@ function Cars() {
                                 ...baseStyles,
                                 fontSize: '13px',
                                 cursor: 'pointer',
-                                overflow: "clip",
+
                             }),
                         }}
                         theme={(theme) => ({
@@ -264,8 +302,15 @@ function Cars() {
                                     ...baseStyles,
                                     fontSize: '13px',
                                     cursor: 'pointer',
-                                    overflow: "clip",
+                                    overflow: "auto",
+                                    maxHeight: '50px',
 
+                                }),
+                                multiValueLabel: (baseStyles, state) => ({
+                                    ...baseStyles,
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
                                 }),
                             }}
                             theme={(theme) => ({
@@ -382,12 +427,10 @@ function Cars() {
                         }))}
                         closeMenuOnSelect={false}
                         hideSelectedOptions={false}
-                        onChange={(selectedOptions) => {
+                        onChange={(selectedOptions) =>
                             setSelectedCategory(
                                 selectedOptions ? selectedOptions.map((option) => option.value) : []
                             )
-
-                        }
                         }
                     />
                 </div>
@@ -403,29 +446,25 @@ function Cars() {
                             </div>
                         </div>
                         <div className='price-input-holder'>
-                            <input placeholder='დან' onChange={handleSearchChange}></input>
+                            <input placeholder='დან' onChange={(e) => setPriceFrom(e.target.value)}></input>
                             <p>-</p>
-                            <input placeholder='მდე'></input>
+                            <input placeholder='მდე' onChange={(e) => setPriceTo(e.target.value)}></input>
                         </div>
                     </div>
                 </div>
 
-
-
                 <div className='searchContainer'>
-                    <button type="submit" id='search-btn'>ძებნა {carCount}</button>
+                    <button id='search-btn' onClick={() => handleSubmit()}>ძებნა {carCount}</button>
                 </div>
 
-
-
-            </form >
+            </div >
             <div className='cars'>
                 <div>
-                    <Sort products={products && products} setProducts={setProducts} carCount={carCount} />
+                    <Sort products={filteredProducts} setProducts={setProducts} carCount={carCount} />
                 </div>
 
                 <div>
-                    <Pagination manufacturer={manufacturer && manufacturer} products={products && products} dark={dark} setDark={setDark} searchQuery={searchQuery && searchQuery} />
+                    <Pagination manufacturer={manufacturer && manufacturer} products={filteredProducts} dark={dark} setDark={setDark} vehileType={vehicleType} />
                 </div>
 
             </div>
@@ -433,4 +472,7 @@ function Cars() {
     )
 
 }
+
+
+
 export default Cars
