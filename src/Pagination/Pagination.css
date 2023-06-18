@@ -26,3 +26,44 @@
     border: none;
   }
   
+@media (min-width: 900px){
+  .priceValue-info{
+    display: flex;
+     justify-content: space-between;
+  }
+  .price-container1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pagination-div{
+    margin-bottom: 20px;
+    width: 780px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+  }
+}
+
+  
+@media (max-width: 900px){
+  .priceValue-info{
+    display: 'flex';
+    flex-direction: column;
+    text-align: left;
+  }
+  .price-container1{
+    display: flex;
+  }
+  .pagination-div{
+    margin-bottom: 20px;
+    width: 200%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+  }
+}

@@ -16,25 +16,24 @@ code {
 .navbar{
   background-color: white;
   height: 60px;
-  margin-bottom: 100px;
-}
-
-.mainLogo{
-  padding: 10px 0px 10px 100px ; 
-  /* margin-left: 50px; */
+  /* margin-bottom: 100px; */
+  /* width: auto; */
 }
 
 
-@media (min-width: 350px) {
+@media only screen and (min-width: 900px) {
   .All{
     display: flex;
   }
+  .mainLogo{
+    padding: 10px 0px 10px 150px ; 
+  }
+  
   
   .filterContainer{
     margin-top: 30px;
     margin-left: 100px;
     border: none;
-    
   
   }
   
@@ -294,17 +293,26 @@ code {
 
 }
 
-@media (max-width: 360px){
+@media only screen and (max-width: 900px){
   .All{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+  }
+
+  .navbar{
+    width: 130%;
+    padding-left: 20px;
+  }
+  .mainLogo {
+    padding: 10px 0px 10px 150px;
   }
   
-  .filterContainer{
+  .filterContainer {
     margin-top: 30px;
     margin-left: 100px;
-    border: none;
-    
-  
   }
   
   .auto-logos{
@@ -483,6 +491,8 @@ code {
     flex-direction: column;
     margin-left: 20px;
     margin-top: 30px;
+    width: 50%;
+
   }
   
   .car-container{
@@ -509,14 +519,16 @@ code {
   }
   
   .info{
-    padding-left: 14px;
-    width: 534px;
-    height: 150px;
+    /* padding-left: 14px; */
+    width: 100%;
+    height: 100%;
   }
   
   .title{
     display: flex;
     justify-content: space-between;
+    /* max-width: 60%; */
+    padding-right: 15px;
   }
   
   .name{
@@ -559,47 +571,6 @@ code {
   
   .eye{
     margin-right: 8px;
-  }
-  
-  /* CarList */
-  .Another-filter-container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 358px;
-    height: 36px
-  }
-  
-  .period-select{
-    height: 34px;
-    background-color: #0000!important;
-    cursor: 'pointer';
-    border-width: 1px!important;
-    border-style: solid;
-    border-color: #d4d4e0;
-    border-radius: 8px;
-    font-size: 12px;
-    color: #454857!important;
-    font-family: TBCXRegular;
-    width: 89px;
-    padding-left: 6px;
-    margin-right: 5px;
-  }
-  
-  .sort-select{
-    height: 34px;
-    background-color: #0000!important;
-    cursor: 'pointer';
-    border-width: 1px!important;
-    border-style: solid;
-    border-color: #d4d4e0;
-    border-radius: 8px;
-    font-size: 12px;
-    color: #454857!important;
-    font-family: TBCXRegular;
-    width: 139px;
-    padding-left: 6px;
-  
   }
   
 }

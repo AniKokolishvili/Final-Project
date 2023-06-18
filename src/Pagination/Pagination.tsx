@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
 import './Pagination.css';
-
+import moment from 'moment';
 
 function Pagination({ manufacturer, products, dark, setDark, vehileType }: { manufacturer: any[], products: any[], dark: boolean, setDark: any, vehileType: string }) {
 
@@ -80,6 +80,12 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                     const priceValue = dark ? item.price_value : item.price_usd
                     const priceValueTheme = { fontFamily: 'TBCXMedium', fontSize: '20px', color: '#272a37', marginRight: '5px' }
                     // const model = carMakes2.filter((model) => model.model_id == item.model_id)
+
+                    const date1 = moment(item.order_date, "YYYY-MM-DD HH:mm:ss");
+                    const currentDate = moment();
+
+                    const differenceInMinutes = currentDate.diff(date1, 'minutes');
+
                     return < div className='car-container' >
                         <section>
                             <img src={`https://static.my.ge/myauto/photos/${item.photo}/thumbs/${item.car_id}_1.jpg?v=${item.photo_ver}`} alt='carImg' />
@@ -94,7 +100,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                     <p className='customs' style={customsTheme}>{customs}</p>
                                 </div>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div className='priceValue-info' >
                                 <div style={{ width: '397.8px', height: '79px' }}>
                                     <div style={{ display: 'flex', }}>
                                         <div style={{ width: '50%', padding: '10px 12px 10px 12px' }}>
@@ -117,7 +123,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                         </div>
                                     </div>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <div className='price-container1' >
                                     <p style={priceValueTheme}>{priceValue}</p>
                                     <div className='currancy-btns'>
                                         <button className='Lari' style={theme} onClick={() => setDark(!dark)}>₾</button>
@@ -127,7 +133,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                 </div>
                             </div>
                             <div className='lowest-container'>
-                                <p className='views'>{item.views} ნახვა . წუთის წინ</p>
+                                <p className='views'>{item.views} ნახვა {differenceInMinutes} წუთის წინ</p>
                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <svg className='msg' width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.91675 7C4.91675 6.58579 5.25253 6.25 5.66675 6.25H10.3334C10.7476 6.25 11.0834 6.58579 11.0834 7C11.0834 7.41421 10.7476 7.75 10.3334 7.75H5.66675C5.25253 7.75 4.91675 7.41421 4.91675 7Z" fill="#6F7383"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M1.71959 2.00645C2.46251 1.26354 3.49615 0.870117 4.66658 0.870117H11.3333C12.5037 0.870117 13.5373 1.26354 14.2802 2.00645C15.0232 2.74937 15.4166 3.78301 15.4166 4.95345V8.95345C15.4166 10.1239 15.0232 11.1575 14.2802 11.9004C13.7006 12.4801 12.9438 12.847 12.0833 12.9803V13.7068C12.0833 14.8428 10.8196 15.5073 9.88455 14.8846M9.8839 14.8842L7.10659 13.0368H4.66658C3.49615 13.0368 2.46251 12.6434 1.71959 11.9004C0.976671 11.1575 0.583252 10.1239 0.583252 8.95345V4.95345C0.583252 3.78301 0.976671 2.74937 1.71959 2.00645M2.78025 3.06711C2.3565 3.49086 2.08325 4.12389 2.08325 4.95345V8.95345C2.08325 9.78302 2.3565 10.416 2.78025 10.8398C3.204 11.2635 3.83702 11.5368 4.66658 11.5368H7.33325C7.48106 11.5368 7.62557 11.5805 7.74863 11.6623L10.5833 13.5478V12.2868C10.5833 11.8726 10.919 11.5368 11.3333 11.5368C12.1628 11.5368 12.7958 11.2635 13.2196 10.8398C13.6433 10.416 13.9166 9.78302 13.9166 8.95345V4.95345C13.9166 4.12389 13.6433 3.49086 13.2196 3.06711C12.7958 2.64336 12.1628 2.37012 11.3333 2.37012H4.66658C3.83702 2.37012 3.204 2.64336 2.78025 3.06711Z" fill="#6F7383"></path></svg>
                                     <svg className='eye' width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1971 1.86358C15.49 1.57069 15.49 1.09582 15.1971 0.802922C14.9042 0.510029 14.4293 0.510029 14.1364 0.802922L11.9576 2.98172C10.763 2.1811 9.41024 1.73657 7.9999 1.73657C5.32859 1.73657 2.92164 3.31184 1.29406 5.8702C0.898865 6.48961 0.726562 7.26919 0.726562 8.00324C0.726562 8.73727 0.898856 9.51683 1.29403 10.1362L1.29406 5.8702L1.29437 10.1368C1.75821 10.8647 2.28833 11.5159 2.86715 12.0722L0.802922 14.1364C0.510029 14.4293 0.510029 14.9042 0.802922 15.1971C1.09582 15.49 1.57069 15.49 1.86358 15.1971L6.84358 10.2171L6.85167 10.2089L10.2089 6.85167C10.2116 6.849 10.2144 6.8463 10.2171 6.84358L15.1971 1.86358ZM9.62304 5.31632L10.8716 4.06773C9.96926 3.52124 8.9924 3.23657 7.9999 3.23657C5.96471 3.23657 3.98512 4.43444 2.55938 6.67578L2.55875 6.67677C2.35417 6.99728 2.22656 7.47748 2.22656 8.00324C2.22656 8.52899 2.35417 9.0092 2.55875 9.32971L2.5591 9.33025C2.96933 9.97416 3.43253 10.5386 3.92806 11.0113L5.31632 9.62304C5.029 9.1501 4.86328 8.59531 4.86328 7.99995C4.86328 6.26573 6.26573 4.86328 7.99995 4.86328C8.59531 4.86328 9.1501 5.029 9.62304 5.31632ZM6.36328 7.99995C6.36328 7.09416 7.09416 6.36328 7.99995 6.36328C8.17434 6.36328 8.34172 6.39024 8.49872 6.44051L6.44051 8.49872C6.39024 8.34172 6.36328 8.17434 6.36328 7.99995ZM12.8967 4.70224C13.2195 4.44263 13.6916 4.49382 13.9512 4.81658C14.2115 5.14023 14.4684 5.48942 14.7061 5.86379C15.1012 6.48316 15.2735 7.26267 15.2735 7.99665C15.2735 8.7307 15.1012 9.51028 14.706 10.1297C13.0784 12.6881 10.6715 14.2633 8.00014 14.2633C7.07361 14.2633 6.1683 14.0674 5.32243 13.7112C4.94068 13.5505 4.76151 13.1107 4.92225 12.7289C5.08299 12.3472 5.52276 12.168 5.90452 12.3288C6.57865 12.6126 7.28668 12.7633 8.00014 12.7633C10.0353 12.7633 12.0149 11.5654 13.4407 9.32411L13.4413 9.32312C13.6459 9.0026 13.7735 8.5224 13.7735 7.99665C13.7735 7.47089 13.6459 6.99069 13.4413 6.67017L13.4402 6.66852C13.238 6.34993 13.0152 6.04612 12.7824 5.75672C12.5228 5.43396 12.574 4.96185 12.8967 4.70224ZM11.0774 8.60269C11.1525 8.19534 10.8832 7.80423 10.4759 7.72912C10.0685 7.65401 9.6774 7.92333 9.60228 8.33068C9.48535 8.96483 8.95799 9.49219 8.32384 9.60912C7.9165 9.68423 7.64717 10.0753 7.72228 10.4827C7.7974 10.89 8.18851 11.1594 8.59585 11.0843C9.84171 10.8545 10.8477 9.84854 11.0774 8.60269Z" fill="#6F7383"></path></svg>
@@ -155,6 +161,11 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                     const priceValue = dark ? item.price_value : item.price_usd
                     const priceValueTheme = { fontFamily: 'TBCXMedium', fontSize: '20px', color: '#272a37', marginRight: '5px' }
                     // const model = carMakes2.filter((model) => model.model_id == item.model_id)
+                    const date1 = moment(item.order_date, "YYYY-MM-DD HH:mm:ss");
+                    const currentDate = moment();
+
+                    const differenceInMinutes = currentDate.diff(date1, 'minutes');
+
                     return < div className='car-container' >
                         <section>
                             <img src={`https://static.my.ge/myauto/photos/${item.photo}/thumbs/${item.car_id}_1.jpg?v=${item.photo_ver}`} alt='carImg' />
@@ -169,7 +180,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                     <p className='customs' style={customsTheme}>{customs}</p>
                                 </div>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div className='priceValue-info'>
                                 <div style={{ width: '397.8px', height: '79px' }}>
                                     <div style={{ display: 'flex', }}>
                                         <div style={{ width: '50%', padding: '10px 12px 10px 12px' }}>
@@ -192,7 +203,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                         </div>
                                     </div>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <div className='price-container1'>
                                     <p style={priceValueTheme}>{priceValue}</p>
                                     <div className='currancy-btns'>
                                         <button className='Lari' style={theme} onClick={() => setDark(!dark)}>₾</button>
@@ -202,7 +213,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                 </div>
                             </div>
                             <div className='lowest-container'>
-                                <p className='views'>{item.views} ნახვა . წუთის წინ</p>
+                                <p className='views'>{item.views} ნახვა {differenceInMinutes} წუთის წინ</p>
                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <svg className='msg' width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.91675 7C4.91675 6.58579 5.25253 6.25 5.66675 6.25H10.3334C10.7476 6.25 11.0834 6.58579 11.0834 7C11.0834 7.41421 10.7476 7.75 10.3334 7.75H5.66675C5.25253 7.75 4.91675 7.41421 4.91675 7Z" fill="#6F7383"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M1.71959 2.00645C2.46251 1.26354 3.49615 0.870117 4.66658 0.870117H11.3333C12.5037 0.870117 13.5373 1.26354 14.2802 2.00645C15.0232 2.74937 15.4166 3.78301 15.4166 4.95345V8.95345C15.4166 10.1239 15.0232 11.1575 14.2802 11.9004C13.7006 12.4801 12.9438 12.847 12.0833 12.9803V13.7068C12.0833 14.8428 10.8196 15.5073 9.88455 14.8846M9.8839 14.8842L7.10659 13.0368H4.66658C3.49615 13.0368 2.46251 12.6434 1.71959 11.9004C0.976671 11.1575 0.583252 10.1239 0.583252 8.95345V4.95345C0.583252 3.78301 0.976671 2.74937 1.71959 2.00645M2.78025 3.06711C2.3565 3.49086 2.08325 4.12389 2.08325 4.95345V8.95345C2.08325 9.78302 2.3565 10.416 2.78025 10.8398C3.204 11.2635 3.83702 11.5368 4.66658 11.5368H7.33325C7.48106 11.5368 7.62557 11.5805 7.74863 11.6623L10.5833 13.5478V12.2868C10.5833 11.8726 10.919 11.5368 11.3333 11.5368C12.1628 11.5368 12.7958 11.2635 13.2196 10.8398C13.6433 10.416 13.9166 9.78302 13.9166 8.95345V4.95345C13.9166 4.12389 13.6433 3.49086 13.2196 3.06711C12.7958 2.64336 12.1628 2.37012 11.3333 2.37012H4.66658C3.83702 2.37012 3.204 2.64336 2.78025 3.06711Z" fill="#6F7383"></path></svg>
                                     <svg className='eye' width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1971 1.86358C15.49 1.57069 15.49 1.09582 15.1971 0.802922C14.9042 0.510029 14.4293 0.510029 14.1364 0.802922L11.9576 2.98172C10.763 2.1811 9.41024 1.73657 7.9999 1.73657C5.32859 1.73657 2.92164 3.31184 1.29406 5.8702C0.898865 6.48961 0.726562 7.26919 0.726562 8.00324C0.726562 8.73727 0.898856 9.51683 1.29403 10.1362L1.29406 5.8702L1.29437 10.1368C1.75821 10.8647 2.28833 11.5159 2.86715 12.0722L0.802922 14.1364C0.510029 14.4293 0.510029 14.9042 0.802922 15.1971C1.09582 15.49 1.57069 15.49 1.86358 15.1971L6.84358 10.2171L6.85167 10.2089L10.2089 6.85167C10.2116 6.849 10.2144 6.8463 10.2171 6.84358L15.1971 1.86358ZM9.62304 5.31632L10.8716 4.06773C9.96926 3.52124 8.9924 3.23657 7.9999 3.23657C5.96471 3.23657 3.98512 4.43444 2.55938 6.67578L2.55875 6.67677C2.35417 6.99728 2.22656 7.47748 2.22656 8.00324C2.22656 8.52899 2.35417 9.0092 2.55875 9.32971L2.5591 9.33025C2.96933 9.97416 3.43253 10.5386 3.92806 11.0113L5.31632 9.62304C5.029 9.1501 4.86328 8.59531 4.86328 7.99995C4.86328 6.26573 6.26573 4.86328 7.99995 4.86328C8.59531 4.86328 9.1501 5.029 9.62304 5.31632ZM6.36328 7.99995C6.36328 7.09416 7.09416 6.36328 7.99995 6.36328C8.17434 6.36328 8.34172 6.39024 8.49872 6.44051L6.44051 8.49872C6.39024 8.34172 6.36328 8.17434 6.36328 7.99995ZM12.8967 4.70224C13.2195 4.44263 13.6916 4.49382 13.9512 4.81658C14.2115 5.14023 14.4684 5.48942 14.7061 5.86379C15.1012 6.48316 15.2735 7.26267 15.2735 7.99665C15.2735 8.7307 15.1012 9.51028 14.706 10.1297C13.0784 12.6881 10.6715 14.2633 8.00014 14.2633C7.07361 14.2633 6.1683 14.0674 5.32243 13.7112C4.94068 13.5505 4.76151 13.1107 4.92225 12.7289C5.08299 12.3472 5.52276 12.168 5.90452 12.3288C6.57865 12.6126 7.28668 12.7633 8.00014 12.7633C10.0353 12.7633 12.0149 11.5654 13.4407 9.32411L13.4413 9.32312C13.6459 9.0026 13.7735 8.5224 13.7735 7.99665C13.7735 7.47089 13.6459 6.99069 13.4413 6.67017L13.4402 6.66852C13.238 6.34993 13.0152 6.04612 12.7824 5.75672C12.5228 5.43396 12.574 4.96185 12.8967 4.70224ZM11.0774 8.60269C11.1525 8.19534 10.8832 7.80423 10.4759 7.72912C10.0685 7.65401 9.6774 7.92333 9.60228 8.33068C9.48535 8.96483 8.95799 9.49219 8.32384 9.60912C7.9165 9.68423 7.64717 10.0753 7.72228 10.4827C7.7974 10.89 8.18851 11.1594 8.59585 11.0843C9.84171 10.8545 10.8477 9.84854 11.0774 8.60269Z" fill="#6F7383"></path></svg>
@@ -232,6 +243,11 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                     const priceValue = dark ? item.price_value : item.price_usd
                     const priceValueTheme = { fontFamily: 'TBCXMedium', fontSize: '20px', color: '#272a37', marginRight: '5px' }
                     // const model = carMakes2.filter((model) => model.model_id == item.model_id)
+                    const date1 = moment(item.order_date, "YYYY-MM-DD HH:mm:ss");
+                    const currentDate = moment();
+
+                    const differenceInMinutes = currentDate.diff(date1, 'minutes');
+
                     return < div className='car-container' >
                         <section>
                             <img src={`https://static.my.ge/myauto/photos/${item.photo}/thumbs/${item.car_id}_1.jpg?v=${item.photo_ver}`} alt='carImg' />
@@ -246,7 +262,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                     <p className='customs' style={customsTheme}>{customs}</p>
                                 </div>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div className='priceValue-info'>
                                 <div style={{ width: '397.8px', height: '79px' }}>
                                     <div style={{ display: 'flex', }}>
                                         <div style={{ width: '50%', padding: '10px 12px 10px 12px' }}>
@@ -269,7 +285,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                         </div>
                                     </div>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <div className='price-container1'>
                                     <p style={priceValueTheme}>{priceValue}</p>
                                     <div className='currancy-btns'>
                                         <button className='Lari' style={theme} onClick={() => setDark(!dark)}>₾</button>
@@ -279,7 +295,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
                                 </div>
                             </div>
                             <div className='lowest-container'>
-                                <p className='views'>{item.views} ნახვა . წუთის წინ</p>
+                                <p className='views'>{item.views} ნახვა {differenceInMinutes} წუთის წინ</p>
                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <svg className='msg' width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.91675 7C4.91675 6.58579 5.25253 6.25 5.66675 6.25H10.3334C10.7476 6.25 11.0834 6.58579 11.0834 7C11.0834 7.41421 10.7476 7.75 10.3334 7.75H5.66675C5.25253 7.75 4.91675 7.41421 4.91675 7Z" fill="#6F7383"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M1.71959 2.00645C2.46251 1.26354 3.49615 0.870117 4.66658 0.870117H11.3333C12.5037 0.870117 13.5373 1.26354 14.2802 2.00645C15.0232 2.74937 15.4166 3.78301 15.4166 4.95345V8.95345C15.4166 10.1239 15.0232 11.1575 14.2802 11.9004C13.7006 12.4801 12.9438 12.847 12.0833 12.9803V13.7068C12.0833 14.8428 10.8196 15.5073 9.88455 14.8846M9.8839 14.8842L7.10659 13.0368H4.66658C3.49615 13.0368 2.46251 12.6434 1.71959 11.9004C0.976671 11.1575 0.583252 10.1239 0.583252 8.95345V4.95345C0.583252 3.78301 0.976671 2.74937 1.71959 2.00645M2.78025 3.06711C2.3565 3.49086 2.08325 4.12389 2.08325 4.95345V8.95345C2.08325 9.78302 2.3565 10.416 2.78025 10.8398C3.204 11.2635 3.83702 11.5368 4.66658 11.5368H7.33325C7.48106 11.5368 7.62557 11.5805 7.74863 11.6623L10.5833 13.5478V12.2868C10.5833 11.8726 10.919 11.5368 11.3333 11.5368C12.1628 11.5368 12.7958 11.2635 13.2196 10.8398C13.6433 10.416 13.9166 9.78302 13.9166 8.95345V4.95345C13.9166 4.12389 13.6433 3.49086 13.2196 3.06711C12.7958 2.64336 12.1628 2.37012 11.3333 2.37012H4.66658C3.83702 2.37012 3.204 2.64336 2.78025 3.06711Z" fill="#6F7383"></path></svg>
                                     <svg className='eye' width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1971 1.86358C15.49 1.57069 15.49 1.09582 15.1971 0.802922C14.9042 0.510029 14.4293 0.510029 14.1364 0.802922L11.9576 2.98172C10.763 2.1811 9.41024 1.73657 7.9999 1.73657C5.32859 1.73657 2.92164 3.31184 1.29406 5.8702C0.898865 6.48961 0.726562 7.26919 0.726562 8.00324C0.726562 8.73727 0.898856 9.51683 1.29403 10.1362L1.29406 5.8702L1.29437 10.1368C1.75821 10.8647 2.28833 11.5159 2.86715 12.0722L0.802922 14.1364C0.510029 14.4293 0.510029 14.9042 0.802922 15.1971C1.09582 15.49 1.57069 15.49 1.86358 15.1971L6.84358 10.2171L6.85167 10.2089L10.2089 6.85167C10.2116 6.849 10.2144 6.8463 10.2171 6.84358L15.1971 1.86358ZM9.62304 5.31632L10.8716 4.06773C9.96926 3.52124 8.9924 3.23657 7.9999 3.23657C5.96471 3.23657 3.98512 4.43444 2.55938 6.67578L2.55875 6.67677C2.35417 6.99728 2.22656 7.47748 2.22656 8.00324C2.22656 8.52899 2.35417 9.0092 2.55875 9.32971L2.5591 9.33025C2.96933 9.97416 3.43253 10.5386 3.92806 11.0113L5.31632 9.62304C5.029 9.1501 4.86328 8.59531 4.86328 7.99995C4.86328 6.26573 6.26573 4.86328 7.99995 4.86328C8.59531 4.86328 9.1501 5.029 9.62304 5.31632ZM6.36328 7.99995C6.36328 7.09416 7.09416 6.36328 7.99995 6.36328C8.17434 6.36328 8.34172 6.39024 8.49872 6.44051L6.44051 8.49872C6.39024 8.34172 6.36328 8.17434 6.36328 7.99995ZM12.8967 4.70224C13.2195 4.44263 13.6916 4.49382 13.9512 4.81658C14.2115 5.14023 14.4684 5.48942 14.7061 5.86379C15.1012 6.48316 15.2735 7.26267 15.2735 7.99665C15.2735 8.7307 15.1012 9.51028 14.706 10.1297C13.0784 12.6881 10.6715 14.2633 8.00014 14.2633C7.07361 14.2633 6.1683 14.0674 5.32243 13.7112C4.94068 13.5505 4.76151 13.1107 4.92225 12.7289C5.08299 12.3472 5.52276 12.168 5.90452 12.3288C6.57865 12.6126 7.28668 12.7633 8.00014 12.7633C10.0353 12.7633 12.0149 11.5654 13.4407 9.32411L13.4413 9.32312C13.6459 9.0026 13.7735 8.5224 13.7735 7.99665C13.7735 7.47089 13.6459 6.99069 13.4413 6.67017L13.4402 6.66852C13.238 6.34993 13.0152 6.04612 12.7824 5.75672C12.5228 5.43396 12.574 4.96185 12.8967 4.70224ZM11.0774 8.60269C11.1525 8.19534 10.8832 7.80423 10.4759 7.72912C10.0685 7.65401 9.6774 7.92333 9.60228 8.33068C9.48535 8.96483 8.95799 9.49219 8.32384 9.60912C7.9165 9.68423 7.64717 10.0753 7.72228 10.4827C7.7974 10.89 8.18851 11.1594 8.59585 11.0843C9.84171 10.8545 10.8477 9.84854 11.0774 8.60269Z" fill="#6F7383"></path></svg>
@@ -304,7 +320,7 @@ function Pagination({ manufacturer, products, dark, setDark, vehileType }: { man
     return (
         <div>
             {currentPageData}
-            <div style={{ marginBottom: '20px', width: '780px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', borderRadius: '5px' }}>
+            <div className='pagination-div'>
 
                 <ReactPaginate
                     previousLabel={"<"}
